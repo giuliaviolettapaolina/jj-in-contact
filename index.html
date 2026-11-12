@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JJ In contact</title>
+<style>
+:root{
+  --geel-0:#ffc81e; --geel-10:#ffd457; --geel-20:#ffe07f; --geel-30:#ffebad; --geel-40:#fff8e5;
+  --groen-0:#00c878; --groen-m20:#007a49; --groen-link:#005734; --groen-40:#e5fff5;
+  --blauw-40:#e5f3ff; --paars-m10:#6b21e4; --paars-0:#9463e5;
+  --grijs-m30:#222; --grijs-m10:#666; --grijs-20:#ddd; --grijs-30:#ebebeb; --grijs-40:#fff;
+  --tekst:#1e1e1e; --muted:#717171; --rood:#e61e14;
+  --font-kop:"Effra","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-tekst:"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+/* Merkkleuren blijven gelijk in dark mode */
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ color-scheme:light; } }
+:root[data-theme="dark"]{ color-scheme:light; }
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--geel-10);color:var(--grijs-m30);font-family:var(--font-tekst);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;cursor:pointer}
+a{color:inherit}
+.kop{font-family:var(--font-kop);font-weight:700;letter-spacing:.003em}
+
+/* achtergrond-vormen */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--geel-10)}
+.bg::before{content:"";position:absolute;width:1860px;height:1860px;border-radius:50%;background:var(--geel-20);left:50%;top:120px;transform:translateX(-46%)}
+.bg .c1{position:absolute;width:174px;height:174px;border-radius:50%;background:var(--geel-0);left:-60px;top:400px;opacity:.6}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+
+/* NAV */
+.nav{display:flex;gap:12px;align-items:center;height:96px}
+.logo{display:flex;align-items:center;gap:6px;height:56px;padding:0 16px;background:#fff;border-radius:100px;border:none;font-size:17px;color:var(--grijs-m30);white-space:nowrap}
+.logo .nos{font-weight:800;letter-spacing:-.02em;color:#5a5a5a}.logo .nos b{color:var(--rood)}
+.search{flex:1;display:flex;align-items:center;height:56px;background:#fff;border-radius:100px;padding:0 8px 0 24px;min-width:0}
+.search input{flex:1;border:none;outline:none;font-size:16px;font-family:var(--font-tekst);background:transparent;min-width:0;color:var(--grijs-m30)}
+.search input::placeholder{color:#8a8a8a}
+.search button{display:flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:none;border-radius:100px;background:#f2f2f2;font-family:var(--font-kop);font-weight:700;font-size:13px;color:var(--grijs-m30)}
+.social{width:56px;height:56px;border-radius:50%;background:#fff;border:none;display:grid;place-items:center;flex:none}
+.social svg{width:20px;height:20px}
+
+/* TOPSTORIES */
+.tops{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:40px 0}
+.top{position:relative;aspect-ratio:552/418;border-radius:12px;overflow:hidden;box-shadow:6px 6px 0 rgba(255,255,255,.8);cursor:pointer}
+.top .ph{position:absolute;inset:0}
+.top .meta{position:absolute;left:16px;bottom:16px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.badge{display:inline-flex;align-items:center;gap:4px}
+.badge span{background:var(--groen-0);color:#fff;font:700 11px var(--font-kop);padding:4px 8px;border-radius:100px}
+.badge i{width:20px;height:20px;border-radius:50%;background:var(--groen-0);display:grid;place-items:center}
+.pill{background:#fff;border-radius:100px;padding:8px 12px;font:700 18px var(--font-kop);color:var(--grijs-m30)}
+
+/* placeholders voor foto's */
+.ph{background:linear-gradient(135deg,var(--a,#bfe3d7),var(--b,#6aa6c6));}
+img.ph{width:100%;height:100%;object-fit:cover;display:block}
+a.top,a.card{text-decoration:none;color:inherit}
+.ph::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 25%,rgba(255,255,255,.35),transparent 45%)}
+
+/* TOOLTIP / BANNER */
+.tip{margin-top:12px;background:var(--geel-30);border:4px solid var(--geel-10);border-radius:20px;display:flex;align-items:center;gap:24px;padding:24px 32px 24px 24px}
+.tip .ico{width:32px;height:32px;border-radius:50%;background:var(--geel-10);display:grid;place-items:center;flex:none}
+.tip p{flex:1;margin:0;font:700 18px/1.2 var(--font-kop)}
+.btn{display:inline-flex;align-items:center;gap:10px;height:56px;padding:12px 16px;border-radius:100px;border:none;font:700 14px/1.2 var(--font-kop);text-decoration:none;white-space:nowrap}
+.btn .arr{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:none}
+.btn-paars{background:var(--paars-m10);color:#fff}.btn-paars .arr{background:var(--paars-0)}
+.btn-paars:hover{background:#5916c9}
+.btn-wit{background:#fff;border:1px solid var(--grijs-20);color:var(--grijs-m30);padding-left:24px}.btn-wit .arr{background:var(--groen-m20)}
+.btn-wit:hover{border-color:#bbb}
+
+/* CHIPS */
+.chips{display:flex;gap:12px;flex-wrap:wrap;margin:40px 0 16px}
+.chip{height:35px;padding:0 12px;border-radius:8px;border:none;background:var(--geel-30);font:700 14px var(--font-kop);color:var(--grijs-m30);display:flex;align-items:center;gap:8px}
+.chip.on{background:var(--grijs-m30);color:#fff}
+
+/* CARDS */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.card{border-radius:20px;overflow:hidden;background:#fff;display:flex;flex-direction:column;cursor:pointer;transition:transform .15s}
+.card:hover{transform:translateY(-3px)}
+.card .img{position:relative;aspect-ratio:508/381}
+.card .img .ph{position:absolute;inset:0}
+.card .play{position:absolute;right:16px;top:16px;width:40px;height:40px;border-radius:50%;background:var(--groen-0);display:grid;place-items:center;z-index:1}
+.card h3{margin:0;padding:16px 16px 24px;font:700 18px/1.2 var(--font-kop);min-height:96px}
+.more{display:flex;align-items:center;gap:24px;margin:16px 0 80px}
+.more hr{flex:1;border:none;border-top:1px solid rgba(0,0,0,.15)}
+
+/* DIALOG */
+.overlay{position:fixed;inset:0;background:rgba(17,17,17,.6);display:flex;align-items:center;justify-content:center;padding:24px;z-index:50;opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay.open{opacity:1;pointer-events:auto}
+.dialog{background:#fff;border-radius:20px;box-shadow:0 0 10px rgba(0,0,0,.2);width:100%;max-width:640px;padding:24px 24px 48px;transform:translateY(12px);transition:transform .2s;max-height:calc(100vh - 48px);overflow:auto}
+.overlay.open .dialog{transform:none}
+.close{width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--grijs-30);display:grid;place-items:center;flex:none}
+.close:hover{background:#f6f6f6}
+.dialog .top-row{display:flex;justify-content:flex-end}
+.dialog h2{margin:16px 0 8px;font:700 32px/1.2 var(--font-kop);color:var(--tekst)}
+.dialog .sub{margin:0 0 40px;color:var(--muted);font-size:16px;line-height:1.5}
+.opt{display:flex;gap:24px;align-items:center;margin-bottom:40px}
+.opt:last-child{margin-bottom:0}
+.opt.start{align-items:flex-start}
+.opt .em{width:80px;height:80px;border-radius:8px;display:grid;place-items:center;font-size:40px;flex:none}
+.opt h4{margin:0 0 4px;font:700 18px/1.2 var(--font-kop)}
+.opt.start h4{margin-bottom:16px}
+.opt p{margin:0;font-size:16px;line-height:1.5;color:var(--grijs-m10)}
+.opt p a{color:var(--groen-link)}
+
+/* VRAAG-PAGINA */
+.article{max-width:1036px;margin:24px auto 80px;position:relative}
+.ask{margin:32px 0;padding:24px;border-radius:20px;background:var(--geel-40);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ask h3{margin:0!important}
+.vragen{margin:16px 0 0;padding-left:22px;font-size:18px}
+.vragen li{margin:8px 0}
+.hero{position:relative;aspect-ratio:16/9;border-radius:20px 20px 0 0;overflow:hidden}
+.hero .ph{position:absolute;inset:0;--a:#a9a64a;--b:#3e6b86}
+.body{background:#fff;border-radius:0 0 20px 20px;padding:80px 24px 120px;text-align:center}
+.body h1{margin:0;font:700 48px/1.2 var(--font-kop);color:var(--tekst)}
+.date{margin:16px 0 0;font:700 14px var(--font-kop);color:#a3a3a3}
+.sticky{display:inline-flex;margin:16px auto 0;background:#fff;border-radius:100px;box-shadow:0 2px 10px rgba(0,0,0,.12);overflow:hidden;position:sticky;top:16px;z-index:5}
+.sticky button{display:flex;align-items:center;gap:4px;height:48px;padding:0 16px;border:none;background:#fff;color:#555;font-size:14px}
+.sticky button+button{border-left:1px solid var(--grijs-30)}
+.sticky button:hover{background:#f6f6f6}
+.prose{max-width:640px;margin:48px auto 0;text-align:left;font-size:20px;line-height:1.5;color:var(--grijs-m30)}
+.prose h3{font:700 24px/1.2 var(--font-kop);margin:48px 0 16px}
+.prose p{margin:0}
+.prose a{color:var(--groen-link)}
+
+/* REACTIES-PANEEL */
+.panel{position:fixed;top:0;right:0;bottom:0;width:425px;max-width:100%;background:#fff;z-index:40;transform:translateX(100%);transition:transform .25s ease;overflow:auto;padding:40px;box-shadow:-4px 0 20px rgba(0,0,0,.08)}
+.panel.open{transform:none}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:57px}
+.panel-head h2{margin:0;font:700 24px var(--font-kop);display:flex;align-items:center;gap:16px}
+.count{background:var(--groen-m20);color:#fff;font:700 13px var(--font-kop);padding:5px 10px;border-radius:100px}
+.field{border:1px solid var(--grijs-30);border-radius:12px;padding:0 12px;margin-bottom:12px;background:#fff}
+.field input,.field textarea{width:100%;border:none;outline:none;font:700 13px var(--font-kop);color:var(--grijs-m30);background:transparent;resize:none}
+.field input{height:46px}
+.field.ta{position:relative;padding-bottom:44px}
+.field textarea{height:52px;padding-top:16px}
+.field input::placeholder,.field textarea::placeholder{color:#8a8a8a}
+.field:focus-within{border-color:var(--groen-m20)}
+.plaats{position:absolute;right:8px;bottom:8px;height:32px;padding:0 12px;border-radius:100px;border:none;background:var(--groen-0);color:#fff;font:700 13px var(--font-kop)}
+.plaats:disabled{background:#d9f7ea;cursor:default}
+.counter{text-align:right;font:700 12px var(--font-kop);color:#8a8a8a;margin-bottom:24px}
+.cmt{padding:40px 0 0}
+.cmt.child{padding:20px 0 0 24px}
+.cmt-meta{display:flex;align-items:center;gap:8px}
+.cmt-meta b{font:700 15px var(--font-kop)}
+.cmt-meta small{font-size:11px;color:#555;flex:1}
+.dots{width:32px;height:32px;border:none;background:none;border-radius:50%;display:grid;place-items:center}
+.dots:hover{background:#f2f2f2}
+.cmt p{margin:12px 0 0;font-size:16px;line-height:1.6}
+.cmt-actions{display:flex;gap:24px;margin-top:24px;font:700 12px var(--font-kop)}
+.cmt-actions button{border:none;background:none;padding:0;display:flex;gap:6px;align-items:center;font:inherit;color:var(--grijs-m30)}
+.cmt-actions .toggle{color:var(--groen-m20)}
+.cert{width:16px;height:16px;border-radius:50%;background:var(--groen-m20);display:grid;place-items:center}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--grijs-m30);color:#fff;padding:12px 20px;border-radius:100px;font:700 14px var(--font-kop);opacity:0;transition:.2s;z-index:60;pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+[hidden]{display:none!important}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .body h1{font-size:36px}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .nav{gap:8px}.social{display:none}
+  .logo{font-size:15px;padding:0 12px}
+  .search{padding-left:16px}.search button span{display:none}
+  .tops{grid-template-columns:1fr;padding:24px 0}
+  .tip{flex-wrap:wrap;padding:16px}.tip p{flex-basis:calc(100% - 56px)}
+  .grid{grid-template-columns:1fr}
+  .opt{gap:16px}.opt .em{width:56px;height:56px;font-size:28px}
+  .dialog h2{font-size:26px}
+  .btn-wit{white-space:normal;height:auto;min-height:56px}
+  .body{padding:48px 16px 80px}.body h1{font-size:30px}.prose{font-size:18px}
+  .panel{padding:24px 16px}
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><div class="c1"></div></div>
+
+<!-- ============ HOMEPAGE ============ -->
+<div id="home">
+  <div class="wrap">
+    <nav class="nav">
+      <button class="logo kop" data-go="home"><span class="nos">N<b>O</b>S</span> Jeugdjournaal</button>
+      <form class="search" onsubmit="event.preventDefault();toast('Zoeken is niet onderdeel van dit prototype')">
+        <input type="search" placeholder="Zoek in Jeugdjournaal..." aria-label="Zoek in Jeugdjournaal">
+        <button type="submit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.5"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></svg><span>Zoeken</span></button>
+      </form>
+      <button class="social" aria-label="Zapp"><svg viewBox="0 0 24 24"><path d="M12 2 22 12 12 22 2 12Z" fill="#00c878"/><text x="12" y="15" font-size="7" font-weight="700" text-anchor="middle" fill="#fff" font-family="Arial">zapp</text></svg></button>
+      <button class="social" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="#007a49" stroke-width="2.4" stroke-linecap="round"><path d="M13 4v11a3.5 3.5 0 1 1-3.5-3.5"/><path d="M13 4c.5 2.5 2.5 4 5 4"/></svg></button>
+      <button class="social" aria-label="Video"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="#9463e5"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></button>
+      <button class="social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" fill="#2f8cff"/><circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="2"/><circle cx="17" cy="7" r="1.2" fill="#fff"/></svg></button>
+    </nav>
+
+    <section class="tops">
+      <a class="top" href="https://jeugdjournaal.nl/artikel/2639122-ochtendjournaal-van-vandaag" target="_blank" rel="noopener">
+        <img class="ph" src="https://images.cdn.nos.nl/6/F/v/H/N/K/hmVYYTCottVd6rsFTUGiJDPFWkNMtz45NquL6YR/240x0x1440x1080-576x432.webp" alt="">
+        <div class="meta"><div class="badge"><span>Vandaag</span><i><svg width="8" height="8" viewBox="0 0 10 10"><path d="M2 1v8l7-4z" fill="#fff"/></svg></i></div><div class="pill">Ochtendjournaal</div></div>
+      </a>
+      <a class="top" href="https://jeugdjournaal.nl/uitzending/105444-avondjournaal-van-gisteren" target="_blank" rel="noopener">
+        <img class="ph" src="https://static.nos.nl/img/jeugd/avondjournaal/576x432a.jpg" alt="">
+        <div class="meta"><div class="badge"><span>Gisteren</span><i><svg width="8" height="8" viewBox="0 0 10 10"><path d="M2 1v8l7-4z" fill="#fff"/></svg></i></div><div class="pill">Avondjournaal</div></div>
+      </a>
+    </section>
+
+    <section class="tip">
+      <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="1.8" stroke-linecap="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3Z"/><path d="M12 0v1M3 4l1 1M21 4l-1 1"/></svg></div>
+      <p>Heb je een nieuwsvraag, tip of weerfoto?</p>
+      <button class="btn btn-paars" id="openDialog">Deel het met ons hier <span class="arr"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5"/></svg></span></button>
+    </section>
+
+    <div class="chips" role="tablist">
+      <button class="chip on">Net binnen</button>
+      <button class="chip">🌍 Nieuws</button>
+      <button class="chip">🌟 Famous</button>
+      <button class="chip">😱 Wow</button>
+      <button class="chip">🐹 Dieren</button>
+      <button class="chip">💪 Jeugd</button>
+    </div>
+
+    <section class="grid" id="grid"></section>
+
+    <div class="more"><hr><button class="btn btn-wit" id="meer" style="padding:12px 24px">Meer laden</button><hr></div>
+  </div>
+</div>
+
+<!-- ============ VRAAG-PAGINA ============ -->
+<div id="vraag" hidden>
+  <div class="wrap">
+    <nav class="nav">
+      <button class="logo kop" data-go="home"><span class="nos">N<b>O</b>S</span> Jeugdjournaal</button>
+      <form class="search" onsubmit="event.preventDefault();toast('Zoeken is niet onderdeel van dit prototype')">
+        <input type="search" placeholder="Zoek in Jeugdjournaal..." aria-label="Zoek in Jeugdjournaal">
+        <button type="submit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.5"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></svg><span>Zoeken</span></button>
+      </form>
+      <button class="social" aria-label="Zapp"><svg viewBox="0 0 24 24"><path d="M12 2 22 12 12 22 2 12Z" fill="#00c878"/><text x="12" y="15" font-size="7" font-weight="700" text-anchor="middle" fill="#fff" font-family="Arial">zapp</text></svg></button>
+      <button class="social" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="#007a49" stroke-width="2.4" stroke-linecap="round"><path d="M13 4v11a3.5 3.5 0 1 1-3.5-3.5"/><path d="M13 4c.5 2.5 2.5 4 5 4"/></svg></button>
+      <button class="social" aria-label="Video"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="#9463e5"/><path d="M10 9v6l5-3z" fill="#fff"/></svg></button>
+      <button class="social" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" fill="#2f8cff"/><circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="2"/><circle cx="17" cy="7" r="1.2" fill="#fff"/></svg></button>
+    </nav>
+  </div>
+
+  <article class="article">
+    <div class="hero"><img class="ph" src="https://images.cdn.nos.nl/6/9/T/g/y/G/DsaymdceFXPTyDGH2FNb4EXVpgYp5CUsx5EGt8e/0x0x1920x1080-1280x720.webp" alt=""></div>
+    <div class="body">
+      <h1>Welke vraag heb jij over het nieuws?</h1>
+      <p class="date">zondag 30 augustus, 13:14</p>
+      <div class="sticky">
+        <button id="openPanel" aria-label="Reacties"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg> <span id="cnt">45</span></button>
+        <button id="copyLink" aria-label="Kopieer link"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.6" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></button>
+      </div>
+      <div class="prose">
+        <p>We vinden het ook leuk om filmpjes met een vraag te krijgen. Dan zie je jezelf misschien wel terug in het Jeugdjournaal!</p>
+        <p style="margin-top:24px">Hier zie je een paar voorbeelden van vragen die we eerder hebben beantwoord:</p>
+        <ul class="vragen">
+          <li><a href="https://jeugdjournaal.nl/artikel/2616915-kindervraag-zijn-koraalriffen-zeldzaam" target="_blank" rel="noopener">Kindervraag: Zijn koraalriffen zeldzaam?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2616664-kindervraag-kunnen-mensen-vliegen-in-de-toekomst" target="_blank" rel="noopener">Kindervraag: kunnen mensen vliegen in de toekomst?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2615847-kindervraag-hoe-maken-jullie-de-ondertiteling" target="_blank" rel="noopener">Kindervraag: Hoe maken jullie de ondertiteling?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2613906-kindervraag-wanneer-werd-de-eerste-basisschool-opgericht" target="_blank" rel="noopener">Kindervraag: Wanneer werd de eerste basisschool opgericht?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2611378-kindervraag-waarom-gaat-het-zo-vaak-mis-met-robots" target="_blank" rel="noopener">Kindervraag: Waarom gaat het zo vaak mis met robots?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2608752-kindervraag-waarom-wordt-alles-steeds-duurder" target="_blank" rel="noopener">Kindervraag: Waarom wordt alles steeds duurder?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2607484-kindervraag-wat-is-de-bekendste-k-popgroep" target="_blank" rel="noopener">Kindervraag: Wat is de bekendste K-popgroep?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2604979-kindervraag-wat-als-het-luchtalarm-echt-afgaat-op-maandag" target="_blank" rel="noopener">Kindervraag: Wat als het luchtalarm écht afgaat op maandag?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2597973-kindervraag-waarom-wil-donald-trump-groenland-hebben" target="_blank" rel="noopener">Kindervraag: Waarom wil Donald Trump Groenland hebben?</a></li>
+          <li><a href="https://jeugdjournaal.nl/artikel/2597023-wat-was-de-eerste-nieuwsuitzending-ooit" target="_blank" rel="noopener">Wat was de eerste nieuwsuitzending ooit?</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+</div>
+
+<!-- ============ DIALOG ============ -->
+<div class="overlay" id="overlay" aria-hidden="true">
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+    <div class="top-row"><button class="close" data-close aria-label="Sluiten"><svg width="16" height="16" viewBox="0 0 16 16" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M2 2l12 12M14 2 2 14"/></svg></button></div>
+    <h2 id="dlgTitle">Nieuwsvraag, tip of weerfoto?</h2>
+    <p class="sub">Wat wil je delen?</p>
+
+    <div class="opt start">
+      <div class="em" style="background:var(--geel-40)">🔦</div>
+      <div>
+        <h4>Ik heb een vraag over het nieuws</h4>
+        <button class="btn btn-wit" id="naarVraag">Stel je vraag, of check: echt of nep? <span class="arr"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h11M9 3.5 13.5 8 9 12.5"/></svg></span></button>
+      </div>
+    </div>
+    <div class="opt">
+      <div class="em" style="background:var(--groen-40)">👀</div>
+      <div>
+        <h4>Ik heb een nieuwstip</h4>
+        <p>Moeten wij iets weten? Stuur het naar <a href="mailto:jeugdjournaal@nos.nl?subject=Mijn%20Nieuwstip&body=Naam%3A%0AWoonplaats%3A%0ADatum%3A%0ATip%3A%20">jeugdjournaal@nos.nl</a></p>
+      </div>
+    </div>
+    <div class="opt">
+      <div class="em" style="background:var(--blauw-40)">☀️</div>
+      <div>
+        <h4>Ik heb een weerfoto</h4>
+        <p>Ben jij tussen de 9 en 12 jaar? Stuur je beste weerfoto van vandaag naar <a href="mailto:weerfoto@jeugdjournaal.nl?subject=Mijn%20weerfoto&body=Naam%3A%0AWoonplaats%3A%0ADatum%3A%20">weerfoto@jeugdjournaal.nl</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REACTIES ============ -->
+<aside class="panel" id="panel" aria-label="Reacties" aria-hidden="true">
+  <div class="panel-head">
+    <h2>Reacties <span class="count" id="total">559</span></h2>
+    <button class="close" id="closePanel" aria-label="Sluiten"><svg width="16" height="16" viewBox="0 0 16 16" stroke="#222" stroke-width="1.6" stroke-linecap="round"><path d="M2 2l12 12M14 2 2 14"/></svg></button>
+  </div>
+  <form id="cform">
+    <div class="field"><input id="naam" placeholder="Naam" maxlength="40" aria-label="Naam"></div>
+    <div class="field ta">
+      <textarea id="tekst" placeholder="Laat ons weten wat je denkt" maxlength="200" aria-label="Reactie"></textarea>
+      <button class="plaats" id="plaats" disabled>Plaats</button>
+    </div>
+    <div class="counter"><span id="chars">0</span>/200</div>
+  </form>
+  <div id="comments"></div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+
+/* ---- kaarten ---- */
+/* Laatste items van jeugdjournaal.nl (opgehaald 12 nov 2026) — [pad, titel, afbeelding, video] */
+const IMG = "https://images.cdn.nos.nl/";
+const cards = [
+  ["2639164-flinke-zoektocht-naar-kevers-in-dit-dierenpark-ze-moeten-er-weg","Flinke zoektocht naar kevers in dit dierenpark, ze moeten er weg","6/6/j/R/n/5/U6jkvWHH8XWauUb5ixVxEb1numKqYdrsBJizajw/240x0x1440x1080-384x288.webp",0],
+  ["2639160-toet-toet-wat-wil-jij-weten-van-een-vrachtwagenchauffeur","Toet toet! Wat wil jij weten van een vrachtwagenchauffeur?","7/8/U/5/z/n/PgVorevZYuyM5FMWC1wHAWAEc14uKjHoSMMFXwo/0x0x960x720-384x288.webp",0],
+  ["2639131-dit-megaschip-hebben-ze-expres-laten-zinken","Dit megaschip hebben ze expres laten zinken","7/9/1/2/R/g/4Z1b5pCSWNuGFPJinkAnLNsb1wofYGvLF4jKdbW/223x1x2664x1998-384x288.webp",0],
+  ["2639129-deskundigen-testen-vuurwerk-kan-alsnog-ontploffen-als-je-m-oppakt","Deskundigen testen vuurwerk: 'Kan alsnog ontploffen als je 'm oppakt'","2/F/d/k/E/o/kdKtuPHeMJtuvqJKHr1NRLNrSnoTRoA2kFV3iVV/240x0x1440x1080-384x288.webp",1],
+  ["2639114-wauw-prins-george-uit-engeland-kan-heel-goed-tekenen","Wauw! Prins George uit Engeland kan heel goed tekenen","5/G/t/M/b/n/dWX3PT1zYvAxFV9XTjDyEZEPkr3hAWCgbVHodt2/240x0x1440x1080-384x288.webp",0],
+  ["2639112-gedoe-in-den-haag-stopt-de-regering","Gedoe in Den Haag; stopt de regering?","6/C/A/K/v/e/aZ3QSZfW6PUsZDDZoHDrpJ1w2pdhJmZME3yZCpz/171x0x3656x2742-384x288.webp",1],
+  ["2639109-kindervraag-waarom-hebben-sommige-schapen-verf-aan-hun-billen","Kindervraag: Waarom hebben sommige schapen verf aan hun billen?","7/8/z/x/F/2/SjXp86U4wy2LXCrRHvCjJgF5zcVJUudLdieq9xw/0x0x2000x1125-512x288.webp",1],
+  ["2639107-nieuwswekker-politici-gaan-stemmen-vuurwerk-testen","Nieuwswekker: Politici gaan stemmen + Vuurwerk testen","3/E/6/5/R/b/hudBZh25wT6vkhoHKeetJACo4vGyPPv6sVwDffm/500x0x3000x2250-384x288.webp",1],
+  ["2639055-dorp-moerdijk-verdwijnt-misschien-toch-niet-stress","Dorp Moerdijk verdwijnt misschien toch niet: 'Stress'","8/E/y/B/N/L/vBuz8JCqKJSAjVFcVhVTTFHWFY5wx2v2kHWtFww/221x0x3556x2667-384x288.webp",1],
+  ["2639053-voetbalclub-ajax-bestaat-ook-in-kenia-ik-haalde-inspiratie-uit-amsterdam","Voetbalclub Ajax bestaat ook in Kenia: 'Ik haalde inspiratie uit Amsterdam'","2/G/C/V/U/Z/Xn6EerQqU3por3vjpbPnE4GquWhcEQPh9tq12Qr/0x0x1440x1080-384x288.webp",1],
+  ["2639041-grote-staking-in-spanje-miljoenen-volwassenen-doen-eraan-mee","Grote staking in Spanje: 'Miljoenen volwassenen doen eraan mee'","8/G/Y/v/F/V/AVtZhCNJB3RuMqHE1BsPboaBpJJVm2HKrP9oHyF/1x0x3552x2664-384x288.webp",1],
+  ["2639027-podcast-een-topmaand-voor-gamers-maar-gamemakers-hebben-het-zwaar","Podcast: Een topmaand voor gamers, maar gamemakers hebben het zwaar","5/8/H/z/2/2/WUx1SbardkbsBqQhcsnhcCuJwgf3chcyhmhMnzX/0x0x1920x1080-512x288.webp",1],
+  ["2639025-agenten-doorzoeken-italiaanse-school-na-bom-melding","Agenten doorzoeken Italiaanse school na bom-melding","5/8/K/Z/Y/B/3zjuHN9xvZr9VEQxfaQr4tJAWu5FnETj5FoJYsY/342x1x2728x2046-384x288.webp",1],
+  ["2639017-in-australie-houden-ze-van-grote-dingen","In Australië houden ze van grote dingen","4/9/K/f/B/p/jWypvZz995RkmWLzS8MgiWXaTRdn1SMVAq2C7r1/240x0x1440x1080-384x288.webp",0],
+  ["2639009-megan-van-katseye-treedt-zittend-en-met-zonnebril-op","Megan van KATSEYE treedt zittend en met zonnebril op","8/F/U/T/e/Y/DbVgTKoE4hXsZmDiZLvDeCacbXLiDSK7kMttZuJ/240x0x1440x1080-384x288.webp",1],
+  ["2638999-keihard-meezingen-op-het-zangfietspad-in-zeewolde","Keihard meezingen op het zangfietspad in Zeewolde","6/D/k/b/U/n/b9TvzyYn7MScYiHVBw6U7XkCvQbvEQB3Ey7XfaL/240x0x1440x1080-576x432.webp",0],
+];
+const playIcon = '<span class="play"><svg width="12" height="12" viewBox="0 0 10 10"><path d="M2 1v8l7-4z" fill="#fff"/></svg></span>';
+let shown = 0;
+function addRow(){
+  const g = $("#grid");
+  cards.slice(shown, shown+4).forEach(([path,t,img,video]) => {
+    const el = document.createElement("a");
+    el.className = "card"; el.href = "https://jeugdjournaal.nl/artikel/" + path; el.target = "_blank"; el.rel = "noopener";
+    el.innerHTML = `<div class="img"><img class="ph" src="${IMG+img}" alt="" loading="lazy" style="position:absolute;inset:0">${video?playIcon:''}</div><h3>${t}</h3>`;
+    g.appendChild(el);
+  });
+  shown += 4;
+  if (shown >= cards.length) $("#meer").hidden = true;
+}
+addRow(); addRow(); addRow();
+$("#meer").onclick = addRow;
+
+document.querySelectorAll(".chip").forEach(c => c.onclick = () => {
+  document.querySelectorAll(".chip").forEach(x => x.classList.remove("on"));
+  c.classList.add("on");
+});
+
+/* ---- navigatie ---- */
+function go(page){
+  $("#home").hidden = page !== "home";
+  $("#vraag").hidden = page !== "vraag";
+  if (page === "vraag") setTimeout(openPanel, 150); else closePanel();
+  window.scrollTo(0,0);
+  if (location.hash !== "#"+page) history.pushState(null,"","#"+page);
+}
+document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(b.dataset.go));
+window.addEventListener("popstate", () => go(location.hash === "#vraag" ? "vraag" : "home"));
+
+/* ---- dialog ---- */
+const ov = $("#overlay");
+function openDialog(){ ov.classList.add("open"); ov.setAttribute("aria-hidden","false"); setTimeout(()=>ov.querySelector(".close").focus(),50); }
+function closeDialog(){ ov.classList.remove("open"); ov.setAttribute("aria-hidden","true"); }
+$("#openDialog").onclick = openDialog;
+ov.querySelector("[data-close]").onclick = closeDialog;
+ov.addEventListener("click", e => { if (e.target === ov) closeDialog(); });
+ov.querySelectorAll("a[href^='mailto']").forEach(a => a.addEventListener("click", () => setTimeout(closeDialog, 300)));
+$("#naarVraag").onclick = () => { closeDialog(); go("vraag"); };
+
+/* ---- reacties ---- */
+const panel = $("#panel");
+function openPanel(){ panel.classList.add("open"); panel.setAttribute("aria-hidden","false"); }
+function closePanel(){ panel.classList.remove("open"); panel.setAttribute("aria-hidden","true"); }
+$("#openPanel").onclick = openPanel;
+$("#closePanel").onclick = closePanel;
+document.addEventListener("keydown", e => { if (e.key === "Escape"){ closeDialog(); closePanel(); } });
+
+$("#copyLink").onclick = () => {
+  const url = location.href;
+  (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(
+    () => toast("Link gekopieerd"), () => toast("Link gekopieerd"));
+};
+
+const dots = '<svg width="4" height="14" viewBox="0 0 4 14" fill="#888"><circle cx="2" cy="2" r="1.5"/><circle cx="2" cy="7" r="1.5"/><circle cx="2" cy="12" r="1.5"/></svg>';
+const bubble = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>';
+const data = [
+  { user:"Frikandel", date:"Zo 27 november, 09:59", text:"Waarom zijn er verkiezingen in andere landen?", open:true, replies:[
+    { user:"Jeugdjournaal", cert:true, date:"Zo 27 november, 10:12", text:"Goede vraag! We zoeken het voor je uit." },
+    { user:"Sam", date:"Zo 27 november, 10:20", text:"Elk land kiest zelf wanneer er verkiezingen zijn, daarom zijn ze niet overal tegelijk." },
+    { user:"Liv", date:"Zo 27 november, 10:31", text:"Dat wilde ik ook al weten!" },
+  ], hidden:5 },
+  { user:"Novalollylollo", date:"Zo 27 november, 09:59", text:"Hoe weet je of een filmpje echt is?", open:false, replies:[
+    { user:"Jeugdjournaal", cert:true, date:"Zo 27 november, 10:40", text:"Kijk goed naar rare dingen in het beeld en check of andere nieuwsmedia het ook laten zien." },
+  ], hidden:7 },
+];
+function esc(s){ return s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function renderComments(){
+  $("#comments").innerHTML = data.map((c,i) => {
+    const n = c.replies.length + (c.hidden||0);
+    const kids = c.open ? c.replies.map(r => `
+      <div class="cmt child">
+        <div class="cmt-meta">${r.cert?'<span class="cert"><svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.8"><path d="M2 5l2 2 4-4"/></svg></span>':''}<b>${esc(r.user)}</b><small>${r.date}</small><button class="dots" aria-label="Opties">${dots}</button></div>
+        <p>${esc(r.text)}</p>
+      </div>`).join("") : "";
+    return `<div class="cmt">
+      <div class="cmt-meta"><b>${esc(c.user)}</b><small>${c.date}</small><button class="dots" aria-label="Opties">${dots}</button></div>
+      <p>${esc(c.text)}</p>
+      <div class="cmt-actions"><button onclick="reply(${i})">Reageer</button>${n?`<button class="toggle" onclick="toggle(${i})">${bubble} ${c.open?"Verberg":"Bekijk"} ${n} reacties</button>`:""}</div>
+      ${kids}
+    </div>`;
+  }).join("");
+}
+window.toggle = i => { data[i].open = !data[i].open; renderComments(); };
+window.reply = i => { $("#tekst").value = "@" + data[i].user + " "; $("#tekst").focus(); upd(); };
+renderComments();
+
+const tekst = $("#tekst"), plaats = $("#plaats");
+function upd(){ $("#chars").textContent = tekst.value.length; plaats.disabled = !tekst.value.trim(); }
+tekst.addEventListener("input", upd);
+$("#cform").onsubmit = e => {
+  e.preventDefault();
+  if (!tekst.value.trim()) return;
+  const now = new Date();
+  const d = now.toLocaleDateString("nl-NL",{weekday:"short",day:"numeric",month:"long"}).replace(/^\w/,c=>c.toUpperCase()).replace(".","");
+  data.unshift({ user: $("#naam").value.trim() || "Anoniem", date: d + ", " + now.toTimeString().slice(0,5), text: tekst.value.trim(), open:false, replies:[], hidden:0 });
+  tekst.value = ""; upd(); renderComments();
+  $("#total").textContent = +$("#total").textContent + 1;
+  $("#cnt").textContent = +$("#cnt").textContent + 1;
+  toast("Je reactie is geplaatst");
+};
+
+let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),2000); }
+
+if (location.hash === "#vraag") go("vraag");
+</script>
+</body>
+</html>
